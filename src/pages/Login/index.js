@@ -1,5 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+
+import api from "../../services/api";
 
 import "./styles.css";
 
@@ -8,15 +10,38 @@ import heroesImg from "../../assets/heroes.png";
 import logoImg from "../../assets/logo.svg";
 
 export default function Login() {
+  let [id, setId] = useState("");
+
+  const history = useHistory();
+
+  async function handleLogin(event) {
+    event.preventDefault();
+
+    try {
+      const response = await api.post("/sessions", { id });
+
+      localStorage.setItem("ong_id", response.data.id);
+      localStorage.setItem("name", response.data.name);
+
+      history.push("/profile");
+    } catch (error) {
+      alert("Alguma coisa deu errado!\nTente novamente com um ID válido.");
+    }
+  }
+
   return (
     <div className="login-container">
       <section className="form">
         <img src={logoImg} alt="Be The Hero" />
 
-        <form>
+        <form onSubmit={handleLogin}>
           <h1>Faça login</h1>
 
-          <input placeholder="Sua ID" />
+          <input
+            value={id}
+            onChange={event => setId(event.target.value)}
+            placeholder="Sua ID"
+          />
           <button className="button" type="submit">
             Entrar
           </button>
