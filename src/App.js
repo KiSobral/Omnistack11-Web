@@ -1,7 +1,11 @@
 import React from "react";
 
+import "./global.css";
+
+import Login from "./pages/Login/index";
+
 function App() {
-  return <h1>herow herow</h1>;
+  return <Login />;
 }
 
 export default App;
