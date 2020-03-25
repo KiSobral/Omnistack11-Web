@@ -24,8 +24,8 @@ export default function Register() {
     try {
       const response = await api.post("/ongs", data);
 
-      localStorage.setItem("ong_id", response.data.id);
-      localStorage.setItem("name", data.name);
+      localStorage.setItem("ongId", response.data.id);
+      localStorage.setItem("ongName", data.name);
 
       history.push("/profile");
 
